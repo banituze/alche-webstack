@@ -1,0 +1,10 @@
+frontend lb-frontend
+    bind *:80
+    redirect scheme https code 301 if !{ ssl_fc }
+    bind *:443 ssl crt /etc/letsencrypt/live/www.banituze.tech/banituze.pem
+    default_backend lb-backend
+
+backend lb-backend
+    balance roundrobin
+    server web01 3.86.59.154:80 check
+    server web02 54.227.118.239:80 check
